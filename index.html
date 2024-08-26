@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" >
+</head>
+<body>
+    
+<div class="cotainer">
+    <div class="message-card">
+
+        <div class="logo-pic">
+            <img src="logo.png" alt="logo-pi" width="150px">
+        </div>
+
+        <div class="title">
+            <h1>Easy Exchange</h1>
+        </div>
+
+        <form onsubmit="sendEmail(); reset(); return false;">
+            <input type="text" id="name" placeholder="your name" required>
+            <input type="email" id="email" placeholder="email id" required>
+            <input type="text" id="phone" placeholder="phone number" required>
+            <textarea id="message" cols="30" rows="4" placeholder="Easy Exchange"></textarea>
+            <button id="submit" type="submit">send</button>
+        </form>
+    </div>
+</div>
+
+
+
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+    function sendEmail(){
+        Email.send({
+    SecureToken : "409d333f-afc9-4a56-b25c-e527c5a0a1bc",
+    To : 'services.elshenawy@gmail.com',
+    From : "services.elshenawy@gmail.com",
+    Subject : "This is test",
+    Body : "name:  " + document.getElementById("name").value 
+           + "<br> Email:  " + document.getElementById("email").value
+           + "<br> phone number:  " + document.getElementById("phone").value
+           + "<br> message:  " + document.getElementById("message").value
+}).then(
+  message => alert("message sent succesfully")
+);
+    }
+</script>
+</body>
+</html>
