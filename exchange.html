@@ -112,6 +112,15 @@
     </div>
 
     <script>
+         // استيراد بيانات طرق الدفع من cash.html
+         fetch('cash.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                displayDetails(); // عرض التفاصيل بعد تحميل طرق الدفع
+            })
+            .catch(error => console.error('Error fetching payment methods:', error));
+            
         // Function to get URL parameters
         function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
@@ -218,43 +227,6 @@
                 default:
                     return '';
             }
-        }
-
-        // Display account information based on payment method
-        function displayAccountInfo(paymentMethod) {
-            let accountInfo = '';
-            let transferType = '';
-
-            switch (paymentMethod) {
-                case 'wallet':
-                    accountInfo = '01227002996';
-                    transferType = 'الرقم';
-                    break;
-                case 'instapay':
-                    accountInfo = 'me.ma7moud@instapay';
-                    transferType = 'اليوزر';
-                    break;
-                case 'fawry':
-                    accountInfo = '01092302904';
-                    transferType = 'الرقم';
-                    break;
-                case 'telda':
-                    accountInfo = '@me2003';
-                    transferType = 'اليوزر';
-                    break;
-                case 'nexta':
-                    accountInfo = '@elshenawy';
-                    transferType = 'اليوزر';
-                    break;
-                default:
-                    accountInfo = 'لا توجد معلومات إضافية مطلوبة لهذه الطريقة.';
-                    break;
-            }
-
-            document.getElementById('accountInfo').innerHTML = `
-                <p>برجاء التحويل إلى ${transferType} الموضح:</p>
-                <span class="copyable" onclick="copyToClipboard('${accountInfo}')">${accountInfo}</span>
-            `;
         }
 
         // Function to copy text to clipboard
