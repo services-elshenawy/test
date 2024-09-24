@@ -112,11 +112,13 @@
     </div>
 
     <script>
-         // استيراد بيانات طرق الدفع من cash.html
-         fetch('cash.html')
-            .then(response => response.text())
+         let paymentMethods = {};
+
+        // استيراد بيانات طرق الدفع من cash.html كـ JSON
+        fetch('cash.html')
+            .then(response => response.json())
             .then(data => {
-                document.body.insertAdjacentHTML('beforeend', data);
+                paymentMethods = data; // تخزين البيانات في المتغير
                 displayDetails(); // عرض التفاصيل بعد تحميل طرق الدفع
             })
             .catch(error => console.error('Error fetching payment methods:', error));
