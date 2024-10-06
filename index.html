@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سعر الصرف USD/EGP</title>
+    <title>سعر الصرف عبر Fixer.io</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,33 +23,33 @@
 </head>
 <body>
 
-    <h1>سعر الصرف الحالي USD/EGP</h1>
+    <h1>سعر الصرف الحالي</h1>
     <div id="exchange-rate">جارِ التحميل...</div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        const apiKey = '51ab02c8f8e25f5899de794eaff001a6';
-        const url = `http://data.fixer.io/api/latest?access_key=${apiKey}&symbols=USD,EGP`;
+        // تعيين نقطة النهاية ومفتاح الوصول
+        var endpoint = 'latest';
+        var access_key = '51ab02c8f8e25f5899de794eaff001a6';
 
-        async function getExchangeRate() {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.success) {
-                    const rate = data.rates.EGP;
-                    document.getElementById('exchange-rate').innerText = `1 USD = ${rate} EGP`;
-                } else {
-                    console.error("Error with API response:", data.error);
-                    document.getElementById('exchange-rate').innerText = "غير متاح";
-                }
-            } catch (error) {
-                console.error("Error fetching exchange rate:", error);
+        // استدعاء API لجلب أسعار الصرف
+        $.ajax({
+            url: 'http://data.fixer.io/api/' + endpoint + '?access_key=' + access_key,
+            dataType: 'jsonp',
+            success: function(json) {
+                // بيانات سعر الصرف
+                var usdToEur = json.rates.USD;
+                var egpToEur = json.rates.EGP;
+                var usdToEgp = egpToEur / usdToEur;
+
+                // عرض سعر الصرف في الصفحة
+                document.getElementById('exchange-rate').innerText = `1 USD = ${usdToEgp.toFixed(2)} EGP`;
+            },
+            error: function() {
+                // في حالة حدوث خطأ
                 document.getElementById('exchange-rate').innerText = "غير متاح";
             }
-        }
-
-        // استدعاء الوظيفة عند تحميل الصفحة
-        window.onload = getExchangeRate;
+        });
     </script>
 
 </body>
