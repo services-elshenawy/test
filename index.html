@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API - سعر الصرف عبر Fixer.io</title>
+</head>
+<body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var usdToEgp;
+
+        // استدعاء API لجلب أسعار الصرف
+        $.ajax({
+            url: 'http://data.fixer.io/api/latest?access_key=51ab02c8f8e25f5899de794eaff001a6',
+            dataType: 'jsonp',
+            success: function(json) {
+                var usdToEur = json.rates.USD;
+                var egpToEur = json.rates.EGP;
+                usdToEgp = egpToEur / usdToEur;
+
+                // استجابة بصيغة JSON عند الطلب
+                if (window.location.search.includes('api')) {
+                    document.write(JSON.stringify({ usdToEgp: usdToEgp.toFixed(2) }));
+                }
+            },
+            error: function() {
+                if (window.location.search.includes('api')) {
+                    document.write(JSON.stringify({ error: "Unable to fetch exchange rate" }));
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

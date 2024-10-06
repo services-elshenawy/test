@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سعر الصرف المحسوب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        #exchange-rate {
+            font-size: 2em;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>سعر الصرف المحسوب</h1>
+    <div id="exchange-rate">جارِ التحميل...</div>
+
+    <script>
+        // استدعاء صفحة index.html كـ API
+        fetch('index.html?api=true')
+            .then(response => response.json())
+            .then(data => {
+                if (data.usdToEgp) {
+                    document.getElementById('exchange-rate').innerText = `1 USD = ${data.usdToEgp} EGP`;
+                } else {
+                    document.getElementById('exchange-rate').innerText = "خطأ في جلب سعر الصرف";
+                }
+            })
+            .catch(error => {
+                document.getElementById('exchange-rate').innerText = "خطأ في الاتصال";
+            });
+    </script>
+
+</body>
+</html>
